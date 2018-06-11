@@ -1,0 +1,31 @@
+version: '3'
+services:
+  tracker:
+    container_name: tracker
+    image: quentinyy/fastdfs
+    command: tracker
+    network_mode: host
+    volumes:   
+      - /var/fdfs/tracker:/var/fdfs    
+  storage0:
+    container_name: storage0
+    image: fastdfs
+    command: storage
+    network_mode: host  
+    environment:
+      - TRACKER_SERVER=ip:22122
+    volumes: 
+      - /var/fdfs/storage0:/var/fdfs
+  #  storage2:
+  #   container_name: storage2
+  #   image: luhuiguo/fastdfs
+  #   command: storage
+  #   network_mode: host  
+  #   environment:
+  #     - TRACKER_SERVER=ip:22122
+  #     - GROUP_COUNT=2
+  #     - GROUP_NAME=group2
+  #     - PORT=23000
+  #   volumes: 
+  #     - /var/fdfs/storage2:/var/fdfs           
+                    
