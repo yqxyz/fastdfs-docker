@@ -22,7 +22,7 @@ RUN mkdir -p ${FASTDFS_PATH}/libfastcommon \
 #compile the libfastcommon
 WORKDIR ${FASTDFS_PATH}/libfastcommon
 
-RUN git clone https://github.com/happyfish100/libfastcommon.git ${FASTDFS_PATH}/libfastcommon \
+RUN git clone --depth=1 https://github.com/happyfish100/libfastcommon.git ${FASTDFS_PATH}/libfastcommon \
     && ./make.sh \
     && ./make.sh install \
     && rm -rf ${FASTDFS_PATH}/libfastcommon
@@ -30,7 +30,7 @@ RUN git clone https://github.com/happyfish100/libfastcommon.git ${FASTDFS_PATH}/
 #compile the fastdfs
 WORKDIR ${FASTDFS_PATH}/fastdfs
 
-RUN git clone https://github.com/happyfish100/fastdfs.git ${FASTDFS_PATH}/fastdfs \
+RUN git clone --depth=1 https://github.com/happyfish100/fastdfs.git ${FASTDFS_PATH}/fastdfs \
     && ./make.sh \
     && ./make.sh install \
     && rm -rf ${FASTDFS_PATH}/fastdfs
@@ -39,7 +39,7 @@ RUN git clone https://github.com/happyfish100/fastdfs.git ${FASTDFS_PATH}/fastdf
 #compile the nginx
 WORKDIR ${FASTDFS_PATH}/nginx
 
-RUN git clone https://github.com/happyfish100/fastdfs-nginx-module.git \
+RUN git clone --depth=1 https://github.com/happyfish100/fastdfs-nginx-module.git \
     && wget https://github.com/quentinyy/resource/raw/master/nginx-1.15.0.tar.gz \
     && tar -zxvf nginx-1.15.0.tar.gz \
     && cd nginx-1.15.0 \
