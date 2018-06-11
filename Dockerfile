@@ -1,4 +1,4 @@
-FROM centos:7
+FROM alpine
 
 LABEL maintainer "quentinyy@gmail.com"
 
@@ -12,12 +12,14 @@ ENV FASTDFS_PATH=/opt/fdfs \
 
 
 #get all the dependences
-RUN yum install -y git gcc make wget pcre pcre-devel zlib zlib-devel openssl openssl-devel
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+    && apk add --no-cache --virtual .build-deps git gcc libc-dev make wget perl \
+    && apk add --no-cache bash pcre-dev zlib-dev
 
 #create the dirs to store the files downloaded from internet
 RUN mkdir -p ${FASTDFS_PATH}/libfastcommon \
     && mkdir -p ${FASTDFS_PATH}/fastdfs \
-    && mkdir ${FASTDFS_BASE_PATH}
+    && mkdir -p ${FASTDFS_BASE_PATH}/data
 
 #compile the libfastcommon
 WORKDIR ${FASTDFS_PATH}/libfastcommon
@@ -48,7 +50,12 @@ RUN git clone https://github.com/happyfish100/fastdfs-nginx-module.git \
     && make install \
     && rm -rf ${FASTDFS_PATH}/nginx
 
-EXPOSE 22122 23000 8080 8888 
+#clean
+RUN apk del .build-deps \
+    && rm -rf /var/cache/apk/* \
+    && apk info
+
+EXPOSE 22122 23000 8080 
 VOLUME ["$FASTDFS_BASE_PATH", "/etc/fdfs","usr/local/nginx/conf"]   
 
 COPY conf/*.* /etc/fdfs/
