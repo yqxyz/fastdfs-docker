@@ -3,7 +3,7 @@
 Usage:
 
 ```
-docker build -t fastdfs .
+docker build -t quentinyy/fastdfs:centos .
 ```
 
 # 单机
@@ -11,14 +11,13 @@ docker build -t fastdfs .
 # tracker 127
 
 ```
-docker run -dti --network=host --name tracker -e PORT=22122 -v /var/fdfs/tracker:/var/fdfs fastdfs tracker
+docker run -dti --network=host --name tracker -e PORT=22122 -v /var/fdfs/tracker:/var/fdfs quentinyy/fastdfs:centos tracker
 ```
 
 # storage 127
 
 ```
-docker run -dti --network=host --name storage0 -e TRACKER_SERVER=192.168.1.127:22122 -e PORT=23000 \
- -e NGINX_PORT=8080 -v /var/fdfs/storage0:/var/fdfs fastdfs storage
+docker run -dti --network=host --name storage0 -e TRACKER_SERVER=192.168.1.127:22122 -e PORT=23000 -e NGINX_PORT=8080 -v /var/fdfs/storage0:/var/fdfs quentinyy/fastdfs:centos storage
 ```
 
 # 集群
@@ -26,27 +25,25 @@ docker run -dti --network=host --name storage0 -e TRACKER_SERVER=192.168.1.127:2
 # tracker 127/128
 
 ```
-docker run -dti --network=host --name tracker -e PORT=22122 -v /var/fdfs/tracker:/var/fdfs fastdfs tracker
+docker run -dti --network=host --name tracker -e PORT=22122 -v /var/fdfs/tracker:/var/fdfs quentinyy/fastdfs:centos tracker
 ```
 
 # storage group1 127/128
 
 ```
-docker run -dti --network=host --name storage1 -e GROUP_NAME=group1 -e GROUP_COUNT=2 \
--v /var/fdfs/storage1:/var/fdfs fastdfs storage 192.168.1.127:22122 192.168.1.128:22122
+docker run -dti --network=host --name storage1 -e GROUP_NAME=group1 -e GROUP_COUNT=2 -v /var/fdfs/storage1:/var/fdfs quentinyy/fastdfs:centos storage 192.168.1.127:22122 192.168.1.128:22122
 ```
 
 # storage group2 129/130
 
 ```
-docker run -dti --network=host --name storage2 -e GROUP_NAME=group2 -e GROUP_COUNT=2 \
--v /var/fdfs/storage2:/var/fdfs fastdfs storage 192.168.1.127:22122 192.168.1.128:22122
+docker run -dti --network=host --name storage2 -e GROUP_NAME=group2 -e GROUP_COUNT=2 -v /var/fdfs/storage2:/var/fdfs quentinyy/fastdfs:centos storage 192.168.1.127:22122 192.168.1.128:22122
 ```
 
 # monitor
 
 ```
-docker run -ti --network=host --name monitor -e TRACKER_SERVER=192.168.1.127:22122 fastdfs monitor
+docker run -ti --network=host --name monitor -e TRACKER_SERVER=192.168.1.127:22122 quentinyy/fastdfs:centos monitor
 ```
 
 # test
